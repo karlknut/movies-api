@@ -126,7 +126,7 @@ app.post("/movies", (req, res) => {
 
 app.delete("/movies/:id", (req, res) => {
   if (typeof movies[req.params.id - 1] === "undefined") {
-    return res.status(404).send({ error: "Movie not found" });
+    return res.status(404).send({ error: "Movie has not been found" });
   }
 
   movies.splice(req.params.id - 1, 1);
