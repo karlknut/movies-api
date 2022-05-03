@@ -124,6 +124,16 @@ app.post("/movies", (req, res) => {
     .send(movie);
 });
 
+app.delete("/movies/:id", (req, res) => {
+  if (typeof movies[req.params.id - 1] === "undefined") {
+    return res.status(404).send({ error: "Movie not found" });
+  }
+
+  movies.splice(req.params.id - 1, 1);
+
+  res.status(204).send({ error: "No content" });
+});
+
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {

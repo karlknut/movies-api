@@ -112,6 +112,29 @@ paths:
       operationId: id
       summary: Get full details of a movie
       description: Returns full details of a given id movie
+    delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/delete-movie"
+      tags:
+        - delete-movie
+      responses:
+        "204":
+          description: Deletes everything about a movie from database
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+              examples:
+                Delete was unsuccessful:
+                  value:
+                    error: Movie you are trying to delete doesn't exist.
+          description: The movie isn't in the database therefore cannot be deleted
+      summary: Delete selected movie
+      description: Deletes a movie chosen by id by user
 components:
   schemas:
     error:
@@ -141,3 +164,14 @@ components:
           Shrek is a gigantic, green-skinned, physically intimidating ogre with a Scottish accent.
           In Shrek Forever After, however, it is revealed that he is much smaller than the average
           ogre.
+    delete-movie:
+      description: ""
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: ""
+          type: string
+      example:
+        id: 1
