@@ -4,6 +4,10 @@ const swaggerDocument = require("./docs/swagger.json");
 const app = express();
 const port = 8080;
 
+app.get("/movies", (req, res) => {
+  res.send(["El Camino", "I Am Legend", "Shrek 2"]);
+});
+
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {
