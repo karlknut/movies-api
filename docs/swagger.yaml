@@ -58,6 +58,31 @@ paths:
           description: Returns a list of movies
       summary: Get a list of all movies.
       description: Returns a list of all movies in API.
+    post:
+      requestBody:
+        description: A new movie to be created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/error"
+            examples:
+              Creating new movie:
+                value:
+                  error: Couldn't add a new movie
+        required: true
+      tags:
+        - new-movie
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/new-movie"
+          description: New movie has been added
+        "400":
+          description: One or all params are missing
+      summary: Creates a movie
+      description: Creates a new movie
   "/movies/:id":
     get:
       tags:
@@ -82,7 +107,7 @@ paths:
               examples:
                 Movie /w+ was not found:
                   value:
-                    error: Movie \w+ was not found in game array.
+                    error: Movie \w+ was not found in movies array.
           description: Movie was not found in movies array
       operationId: id
       summary: Get full details of a movie
@@ -98,3 +123,21 @@ components:
           type: string
       example:
         error: Error message.
+    new-movie:
+      title: Root Type for new-movie
+      description: ""
+      required:
+        - description
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: Shrek
+        description: >-
+          Shrek is a gigantic, green-skinned, physically intimidating ogre with a Scottish accent.
+          In Shrek Forever After, however, it is revealed that he is much smaller than the average
+          ogre.

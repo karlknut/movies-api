@@ -5,6 +5,8 @@ const swaggerDocument = yamljs.load("./docs/swagger.yaml");
 const app = express();
 const port = 8080;
 
+app.use(express.json());
+
 const movies = [
   {
     id: 1,
@@ -104,8 +106,32 @@ app.get("/movies/:id", (req, res) => {
   res.send(movies[req.params.id - 1]);
 });
 
+app.post("/movies", (req, res) => {
+  if (!req.body.name || !req.body.description) {
+    return res.status(400).send({ error: "One or all params are missing" });
+  }
+  let movie = {
+    id: movies.length + 1,
+    name: req.body.name,
+    description: req.body.description,
+  };
+
+  movies.push(movie);
+
+  res
+    .status(201)
+    .location(`${getBaseUrl(req)}/movies/${movies.length}`)
+    .send(movie);
+});
+
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {
   console.log(`API up at: http://localhost:${port}`);
 });
+
+function getBaseUrl(req) {
+  return req.connection && req.connection.encrypted
+    ? "https"
+    : "http" + `://${req.headers.host}`;
+}
