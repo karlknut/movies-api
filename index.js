@@ -139,8 +139,7 @@ app.delete("/movies/:id", (req, res) => {
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {
-  console.log(`API up at: http://localhost:${port}`);
-  console.log(`Movies database is available at: http://localhost:${port}/movies`);
+  console.log(`API up at: http://localhost:${port}/movies`);
 });
 
 function getBaseUrl(req) {
