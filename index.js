@@ -1,10 +1,12 @@
 const express = require("express");
 const swaggerUI = require("swagger-ui-express");
 const yamljs = require("yamljs");
+const cors = require("cors");
 const swaggerDocument = yamljs.load("./docs/swagger.yaml");
 const app = express();
 const port = 8080;
 
+app.use(cors());
 app.use(express.json());
 
 const movies = [
