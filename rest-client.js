@@ -2,13 +2,15 @@ const vue = Vue.createApp({
   data() {
     return {
       movieInModal: { name: null },
-      movies: [],
-      // description: "",
-      // actors: "",
+        movies: [],
+        actors: [],
+        movieActors: [],
     };
   },
   async created() {
-    this.movies = await (await fetch("http://localhost:8080/movies")).json();
+      this.movies = await (await fetch("http://localhost:8080/movies")).json();
+      this.actors = await (await fetch("http://localhost:8080/actors")).json();
+      this.movieActors = await (await fetch("http://localhost:8080/movieactors")).json();
     console.log(this.movies);
   },
   methods: {
